@@ -32,21 +32,20 @@ public class SequentialSearchSymbolTable<Key, Value>
 			return;
 		}
 		//  查找给定的健，找到则更新其值，否则在表中新建结点
-		for (Node node = first; node != null; node = node.next) {
-			if (!key.equals(node.key)) {
-				continue;
-			}
-			if (val == null) {
-				//  命中，删除
-				delete(node);
-				return;
-			}
-			//  命中，更新
-			node.val = val;
+		Node node = getNode(key);
+		if (node == null) {
+			//  未命中，新建结点
+			add(key, val);
 			return;
 		}
-		//  未命中，新建结点
-		add(key, val);
+		// 命中
+		if (val == null) {
+			//  命中，删除
+			delete(node);
+			return;
+		}
+		//  命中，更新
+		node.val = val;
 	}
 
 	private void delete(Node node) {
@@ -68,7 +67,6 @@ public class SequentialSearchSymbolTable<Key, Value>
 		if (first != null && first.next != null) {
 			first.next.previous = first;
 		}
-
 		++n;
 	}
 
@@ -84,10 +82,20 @@ public class SequentialSearchSymbolTable<Key, Value>
 			return null;
 		}
 		//  查找给定的值，返回相关联的值
+		Node node = getNode(key);
+		if (node != null) {
+			//  命中
+			return node.val;
+		}
+		//  未命中
+		return null;
+	}
+
+	private Node getNode(Key key) {
 		for (Node node = first; node != null; node = node.next) {
 			if (key.equals(node.key)) {
 				//  命中
-				return node.val;
+				return node;
 			}
 		}
 		//  未命中
@@ -164,10 +172,14 @@ public class SequentialSearchSymbolTable<Key, Value>
 	public static void main(String[] args) {
 		SequentialSearchSymbolTable<String, Integer> st =
 				new SequentialSearchSymbolTable();
+		for (String key : st.keys()) {
+			StdOut.println(key + " " + st.get(key));
+		}
 		for (int i = 0; !StdIn.isEmpty(); i++) {
 			String key = StdIn.readString();
 			st.put(key, i);
 		}
+		StdOut.println("输出: ");
 		for (String key : st.keys()) {
 			StdOut.println(key + " " + st.get(key));
 		}
