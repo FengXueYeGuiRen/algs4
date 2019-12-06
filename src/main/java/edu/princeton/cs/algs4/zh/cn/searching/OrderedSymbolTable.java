@@ -47,12 +47,12 @@ public interface OrderedSymbolTable<Key extends Comparable<Key>, Value>
 	int rank(Key key);
 
 	/**
-	 * 排名为 k 的健
+	 * 排名为 i 的健
 	 *
-	 * @param k
+	 * @param i
 	 * @return
 	 */
-	Key select(int k);
+	Key select(int i);
 
 	/**
 	 * 删除最小的键
