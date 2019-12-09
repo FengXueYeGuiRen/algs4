@@ -18,15 +18,15 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 
 	private int n;
 
-	public BinarySearchSymbolTable(int n) {
-		keys = (Key[]) new Comparable[n * 2];
-		vals = (Value[]) new Object[n * 2];
+	public BinarySearchSymbolTable(int capacity) {
+		keys = (Key[]) new Comparable[capacity];
+		vals = (Value[]) new Object[capacity];
 	}
 
 	/**
 	 * 最小的健
 	 *
-	 * @return
+	 * @return @Nullable
 	 */
 	@Override
 	public Key min() {
@@ -39,7 +39,7 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	/**
 	 * 最大的键
 	 *
-	 * @return
+	 * @return @Nullable
 	 */
 	@Override
 	public Key max() {
@@ -57,8 +57,15 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public Key floor(Key key) {
+		if (key == null) {
+			return null;
+		}
 		int i = rank(key);
-		return select(i);
+		Key iKey = select(i);
+		if (i <= 0 || key.compareTo(iKey) >= 0) {
+			return iKey;
+		}
+		return select(--i);
 	}
 
 	/**
@@ -69,12 +76,20 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public Key ceiling(Key key) {
+		if (key == null) {
+			return null;
+		}
 		int i = rank(key);
-		return select(i);
+		Key iKey = select(i);
+		if (i >= size() - 1 || key.compareTo(iKey) <= 0) {
+			return iKey;
+		}
+		return select(++i);
 	}
 
 	/**
 	 * 小于 key 的健的数量
+	 * 二分查找(迭代)
 	 *
 	 * @param key
 	 * @return
@@ -82,14 +97,15 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	@Override
 	public int rank(Key key) {
 		if (key == null || size() < 1) {
-			//  异常
 			return 0;
 		}
 		int lo = 0, hi = size() - 1;
-		int mid = lo;
+
 		while (lo <= hi) {
-			mid = (lo + hi) / 2;
+			int mid = (lo + hi) / 2;
+
 			int cmp = key.compareTo(keys[mid]);
+
 			if (cmp < 0) {
 				hi = mid - 1;
 			} else if (cmp > 0) {
@@ -99,7 +115,7 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 				break;
 			}
 		}
-		return lo;
+		return lo >= size() ? size() - 1 : lo;
 	}
 
 	/**
@@ -110,7 +126,7 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public Key select(int i) {
-		if (i < 0) {
+		if (i < 0 || i >= size()) {
 			return null;
 		}
 		return keys[i];
@@ -157,25 +173,31 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 		if (key == null) {
 			return;
 		}
+		//  查找键，找到则更新值，否则创建新的元素
 		int i = rank(key);
-		if (keys[i] != key) {
+		if (i < 0 || i > size()) {
+			return;
+		}
+		//  未命中
+		if (keys[i] == null
+				|| keys[i].compareTo(key) != 0) {
 			insert(i, key, val);
 			return;
-		}//  i > 0
-		//  i > 0 && val == null
+		}//  命中
+		//  命中 && val == null
 		if (val == null) {
 			delete(i);
 			return;
-		}// i > 0 && val != null
+		}// 命中 && val != null
 		vals[i] = val;
 	}
 
 	private void insert(int index, Key key, Value val) {
-		//  val == null
-		if (index >= keys.length || val == null || key == null) {
+		if (index >= keys.length
+				|| val == null
+				|| key == null) {
 			return;
 		}
-		//  val != null
 		for (int i = size(); i > index; --i) {
 			keys[i] = keys[i - 1];
 			vals[i] = vals[i - 1];
@@ -196,6 +218,8 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 			++index;
 		}
 		--n;
+		keys[n] = null;
+		vals[n] = null;
 	}
 
 	/**
@@ -206,11 +230,12 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public Value get(Key key) {
-		if (key == null) {
+		if (key == null || isEmpty()) {
 			return null;
 		}
 		int i = rank(key);
-		if (i >= 0) {
+		if (i < size()
+				&& keys[i].compareTo(key) == 0) {
 			return vals[i];
 		}
 		return null;
@@ -270,7 +295,24 @@ public class BinarySearchSymbolTable<Key extends Comparable<Key>, Value>
 		for (Integer key : st.keys()) {
 			StdOut.println(key + " " + st.get(key));
 		}
+		StdOut.println();
+		StdOut.println("ceiling(66)66: " + st.ceiling(66));
+		StdOut.println("floor(66)66: " + st.floor(66));
 
+		StdOut.println("ceiling(88)99: " + st.ceiling(88));
+		StdOut.println("floor(88)77: " + st.floor(88));
+
+		StdOut.println("ceiling(0)0: " + st.ceiling(0));
+		StdOut.println("floor(0)0: " + st.floor(0));
+
+		StdOut.println("ceiling(99)99: " + st.ceiling(99));
+		StdOut.println("floor(99)99: " + st.floor(99));
+
+		StdOut.println("ceiling(-1)0: " + st.ceiling(-1));
+		StdOut.println("floor(-1)0: " + st.floor(-1));
+
+		StdOut.println("ceiling(999)99: " + st.ceiling(999));
+		StdOut.println("floor(999)99: " + st.floor(999));
 	}
 
 }
