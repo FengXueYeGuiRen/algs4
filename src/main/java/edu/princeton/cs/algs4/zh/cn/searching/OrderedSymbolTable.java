@@ -57,7 +57,7 @@ public interface OrderedSymbolTable<Key extends Comparable<Key>, Value>
 	/**
 	 * 删除最小的键
 	 */
-	default void deletedMin() {
+	default void deleteMin() {
 		Key minKey = min();
 
 		Value value = delete(minKey);

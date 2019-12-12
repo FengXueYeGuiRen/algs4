@@ -182,6 +182,46 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	}
 
 	/**
+	 * 删除最小的键
+	 */
+	@Override
+	public void deleteMin() {
+		root = deleteMin(root);
+	}
+
+	private Node deleteMin(Node node) {
+		if (node == null) {
+			return null;
+		}
+		if (node.left == null) {
+			return node.right;
+		}
+		node.left = deleteMin(node.left);
+		node.n = size(node.left) + size(node.right) + 1;
+		return node;
+	}
+
+	/**
+	 * 删除最大的健
+	 */
+	@Override
+	public void deleteMax() {
+		root = deleteMax(root);
+	}
+
+	private Node deleteMax(Node node) {
+		if (node == null) {
+			return null;
+		}
+		if (node.right == null) {
+			return node.left;
+		}
+		node.right = deleteMax(node.right);
+		node.n = size(node.left) + size(node.right) + 1;
+		return node;
+	}
+
+	/**
 	 * [lo, ..., hi]之间的所有键，已排序
 	 *
 	 * @param lo
@@ -242,6 +282,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		if (key == null) {
 			return;
 		}
+		if (val == null) {
+			delete(key);
+			return;
+		}
 		root = put(root, key, val);
 	}
 
@@ -256,9 +300,6 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		} else if (cmp > 0) {
 			//  key > node.key
 			node.right = put(node.right, key, val);
-		} else if (val == null) {
-			//  key == node.key && val == null
-			// TODO: 2019-12-09 val == null 时删除结点
 		} else {
 			//  key == node.key && val != null
 			node.val = val;
@@ -296,6 +337,50 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		}
 		//  key == node.key
 		return node.val;
+	}
+
+	/**
+	 * 从表中删去健 key(及其对应的值)
+	 *
+	 * @param key
+	 */
+	@Override
+	public Value delete(Key key) {
+		if (key == null) {
+			return null;
+		}
+		root = delete(key, root);
+		return null;
+	}
+
+	private Node delete(Key key, Node node) {
+		if (key == null || node == null) {
+			return node;
+		}
+		int cmp = key.compareTo(node.key);
+		if (cmp < 0) {
+			//  key < node.key
+			node.left = delete(key, node.left);
+		} else if (cmp > 0) {
+			//  key > node.key
+			node.right = delete(key, node.right);
+		} else {
+			//  key == node.key
+
+			if (node.left == null) {
+				return node.right;
+			}
+			if (node.right == null) {
+				return node.left;
+			}
+			//  node.left != null && node.right != null
+			Node deleting = node;
+			node = min(deleting.right);
+			node.left = deleting.left;
+			node.right = deleteMin(deleting.right);
+		}
+		node.n = size(node.left) + size(node.right) + 1;
+		return node;
 	}
 
 	/**
@@ -337,6 +422,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 
 		select(binarySearchTree);
 		rank(binarySearchTree);
+		delete(binarySearchTree);
 		keys(binarySearchTree);
 
 		for (Integer param : params) {
@@ -344,6 +430,12 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		}
 		select(binarySearchTree);
 		rank(binarySearchTree);
+		delete(binarySearchTree);
+
+		binarySearchTree = new BinarySearchTree();
+		for (Integer param : params) {
+			binarySearchTree.put(param, Integer.toString(param));
+		}
 		keys(binarySearchTree);
 	}
 
@@ -376,6 +468,32 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 			System.out.print("rank(" + key + "): " + binarySearchTree.rank(key) + "; ");
 		}
 		System.out.println("\n");
+	}
+
+	private static void delete(BinarySearchTree<Integer, String> binarySearchTree) {
+		System.out.println("min(): " + binarySearchTree.min() + ". deleteMin");
+		binarySearchTree.deleteMin();
+		System.out.println("max(): " + binarySearchTree.max() + ". deleteMax");
+		binarySearchTree.deleteMax();
+
+		System.out.println("put(" + 66 + ", null)");
+		binarySearchTree.put(66, null);
+
+		if (binarySearchTree.root == null) {
+			System.out.println();
+			return;
+		}
+		int i = binarySearchTree.root.n / 2;
+		Integer key = binarySearchTree.select(i);
+		System.out.println("select(" + i + "): " + key + ", delete");
+		binarySearchTree.delete(key);
+
+		i = binarySearchTree.root.n / 2;
+		key = binarySearchTree.select(i);
+		System.out.println("select(" + i + "): " + key + ", put(" + key + ", null)");
+		binarySearchTree.put(key, null);
+
+		System.out.println();
 	}
 
 	private static void keys(BinarySearchTree<Integer, String> binarySearchTree) {
