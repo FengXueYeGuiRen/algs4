@@ -135,7 +135,23 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public Key select(int i) {
-		return null;
+		Node node = select(root, i);
+		return node == null ? null : node.key;
+	}
+
+	private Node select(Node node, int i) {
+		if (node == null || i < 0) {
+			return null;
+		}
+		int leftN = size(node.left);
+		if (i == leftN) {
+			return node;
+		}
+		if (i < leftN) {
+			return select(node.left, i);
+		}
+		//  i > node.n
+		return select(node.right, i - leftN - 1);
 	}
 
 	/**
@@ -148,7 +164,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	@Override
 	public Iterable<Key> keys(Key lo, Key hi) {
 		Queue<Key> queue = new LinkedList();
-		if (lo == null && hi == null) {
+		if ((lo == null && hi == null)
+				|| isEmpty()) {
 			return queue;
 		}
 		if (lo == null) {
@@ -290,10 +307,38 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		StdRandom.shuffle(params);
 
 		BinarySearchTree<Integer, String> binarySearchTree = new BinarySearchTree();
+
+		select(binarySearchTree);
+
+		keys(binarySearchTree);
+
 		for (Integer param : params) {
 			binarySearchTree.put(param, Integer.toString(param));
 		}
+		select(binarySearchTree);
+
 		keys(binarySearchTree);
+	}
+
+	private static void select(BinarySearchTree<Integer, String> binarySearchTree) {
+		System.out.print(
+				"select(" + Integer.MIN_VALUE + "): "
+						+ binarySearchTree.select(Integer.MIN_VALUE));
+		if (binarySearchTree == null || binarySearchTree.root == null) {
+			System.out.println();
+			return;
+		}
+		for (int i = 0; i < binarySearchTree.root.n; ++i) {
+			if (i > 0) {
+				System.out.print("; ");
+			}
+			System.out.print("select(" + i + "): "
+					+ binarySearchTree.select(i));
+		}
+		System.out.print(
+				"select(" + Integer.MAX_VALUE + "): "
+						+ binarySearchTree.select(Integer.MAX_VALUE));
+		System.out.println();
 	}
 
 	private static void keys(BinarySearchTree<Integer, String> binarySearchTree) {
