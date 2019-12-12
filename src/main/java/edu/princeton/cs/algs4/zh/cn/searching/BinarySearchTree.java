@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 /**
  * 基于二叉查找树的符号表(3.2 算法3.3)
@@ -116,15 +117,34 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	 */
 	@Override
 	public int rank(Key key) {
-		Node node = floor(root, key);
+		if (key == null) {
+			return 0;
+		}
+		return rank(key, root);
+	}
+
+	/**
+	 * 返回以 node 为根结点的子树中小于 node.key 的键的数量
+	 *
+	 * @param key
+	 * @param node
+	 * @return
+	 */
+	private int rank(Key key, Node node) {
 		if (node == null) {
 			return 0;
 		}
 		int cmp = key.compareTo(node.key);
+		//  key == node.key
 		if (cmp == 0) {
-			return node.n - 1;
+			return size(node.left);
 		}
-		return node.n;
+		//  key < node.key
+		if (cmp < 0) {
+			return rank(key, node.left);
+		}
+		//  key > node.key
+		return size(node.left) + 1 + rank(key, node.right);
 	}
 
 	/**
@@ -139,6 +159,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		return node == null ? null : node.key;
 	}
 
+	/**
+	 * 返回排名为 i 的结点
+	 *
+	 * @param node
+	 * @param i
+	 * @return
+	 */
 	private Node select(Node node, int i) {
 		if (node == null || i < 0) {
 			return null;
@@ -309,14 +336,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		BinarySearchTree<Integer, String> binarySearchTree = new BinarySearchTree();
 
 		select(binarySearchTree);
-
+		rank(binarySearchTree);
 		keys(binarySearchTree);
 
 		for (Integer param : params) {
 			binarySearchTree.put(param, Integer.toString(param));
 		}
 		select(binarySearchTree);
-
+		rank(binarySearchTree);
 		keys(binarySearchTree);
 	}
 
@@ -325,7 +352,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 				"select(" + Integer.MIN_VALUE + "): "
 						+ binarySearchTree.select(Integer.MIN_VALUE));
 		if (binarySearchTree == null || binarySearchTree.root == null) {
-			System.out.println();
+			System.out.println("\n");
 			return;
 		}
 		for (int i = 0; i < binarySearchTree.root.n; ++i) {
@@ -338,7 +365,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		System.out.print(
 				"select(" + Integer.MAX_VALUE + "): "
 						+ binarySearchTree.select(Integer.MAX_VALUE));
-		System.out.println();
+		System.out.println("\n");
+	}
+
+	private static void rank(BinarySearchTree<Integer, String> binarySearchTree) {
+		Integer randomKey = new Random().nextInt();
+		System.out.print("rank(" + randomKey + "): " + binarySearchTree.rank(randomKey) + "; ");
+
+		for (Integer key : binarySearchTree.keys()) {
+			System.out.print("rank(" + key + "): " + binarySearchTree.rank(key) + "; ");
+		}
+		System.out.println("\n");
 	}
 
 	private static void keys(BinarySearchTree<Integer, String> binarySearchTree) {
@@ -385,6 +422,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		iterable = binarySearchTree.keys(5, 5);
 		System.out.print("keys(5, 5): ");
 		iterable.forEach((key) -> System.out.print(key + " "));
+		System.out.println();
 		System.out.println();
 	}
 
