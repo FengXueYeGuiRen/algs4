@@ -25,10 +25,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	@Override
 	public Key min() {
 		Node minNode = min(root);
-		if (minNode == null) {
-			return null;
-		}
-		return minNode.key;
+
+		return minNode == null ? null : minNode.key;
 	}
 
 	private Node min(Node node) {
@@ -46,10 +44,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 	@Override
 	public Key max() {
 		Node maxNode = max(root);
-		if (maxNode == null) {
-			return null;
-		}
-		return maxNode.key;
+
+		return maxNode == null ? null : maxNode.key;
 	}
 
 	private Node max(Node node) {
@@ -76,12 +72,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 			return null;
 		}
 		int cmp = key.compareTo(node.key);
-		//  key <= node.key
-		if (cmp <= 0) {
+		//  key == node.key
+		if (cmp == 0) {
 			return node;
 		}
+		//  key < node.key
+		if (cmp < 0) {
+			return floor(node.left, key);
+		}
 		//  key > node.key
-		return floor(node.right, key);
+		Node right = floor(node.right, key);
+		return right == null ? node : right;
 	}
 
 	/**
@@ -101,12 +102,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 			return null;
 		}
 		int cmp = key.compareTo(node.key);
-		//  key >= node.key
-		if (cmp >= 0) {
+		//  key == node.key
+		if (cmp == 0) {
 			return node;
 		}
+		//  key > node.key
+		if (cmp > 0) {
+			return ceiling(node.right, key);
+		}
 		//  key < node.key
-		return ceiling(node.left, key);
+		Node left = ceiling(node.left, key);
+		return left == null ? node : left;
 	}
 
 	/**
@@ -289,6 +295,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		root = put(root, key, val);
 	}
 
+	/**
+	 * 查找key，找到则更新它的值，否则为它创建一个新的结点
+	 * 如果 key 存在于以 node 为跟结点的子树中则更新它的值；
+	 * 否则将以 key 和 val 为健值对的新结点插入到该子树中
+	 *
+	 * @param node
+	 * @param key
+	 * @param val
+	 * @return
+	 */
 	private Node put(Node node, Key key, Value val) {
 		if (node == null) {
 			return new Node(key, val, 1);
@@ -304,7 +320,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 			//  key == node.key && val != null
 			node.val = val;
 		}
-		node.n = size(node.left) + size(node.right) + 1;
+		node.n = size(node.left) + 1 + size(node.right);
 		return node;
 	}
 
@@ -322,6 +338,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		return get(root, key);
 	}
 
+	/**
+	 * 在以 node 为跟结点的子树中查找并返回 key 所对应的值；
+	 * 如果找不到则返回 null
+	 *
+	 * @param node
+	 * @param key
+	 * @return @Nullable
+	 */
 	private Value get(Node node, Key key) {
 		if (node == null) {
 			return null;
@@ -432,7 +456,9 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
 		rank(binarySearchTree);
 		delete(binarySearchTree);
 
-		binarySearchTree = new BinarySearchTree();
+		for (Integer param : params) {
+			binarySearchTree.put(param, Integer.toString(param));
+		}
 		for (Integer param : params) {
 			binarySearchTree.put(param, Integer.toString(param));
 		}
