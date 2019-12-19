@@ -35,45 +35,47 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 	}
 
 	private Node rotateLeft(Node node) {
-		if (node == null
-				|| node.right == null
-				|| !isRed(node.right)) {
+		if (node == null || !isRed(node.right)) {
 			return node;
 		}
 		Node t = node;
 		node = node.right;
+		node.isRed = t.isRed;
 
 		t.right = node.left;
 
 		node.left = t;
 		t.isRed = true;
 
+		t.n = size(t.left) + 1 + size(t.right);
 		node.n = size(node.left) + 1 + size(node.right);
 		return node;
 	}
 
 	private Node rotateRight(Node node) {
-		if (node == null
-				|| node.left == null
-				|| !isRed(node.left)) {
+		if (node == null || !isRed(node.left)) {
 			return node;
 		}
 		Node t = node;
 		node = node.left;
+		node.isRed = t.isRed;
 
 		t.left = node.right;
 
 		node.right = t;
 		t.isRed = true;
 
+		t.n = size(t.left) + 1 + size(t.right);
 		node.n = size(node.left) + 1 + size(node.right);
+
+		if (isRed(node.left) && isRed(node.right)) {
+			flipColors(node);
+		}
 		return node;
 	}
 
 	private void flipColors(Node node) {
 		if (node == null
-				|| node.left == null
-				|| node.right == null
 				|| !isRed(node.left)
 				|| !isRed(node.right)) {
 			return;
@@ -229,18 +231,17 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 			node.left = put(node.left, key, val);
 		} else if (cmp > 0) {
 			node.right = put(node.right, key, val);
-
-			if (isRed(node.right)) {
-				node = rotateLeft(node);
-			}
 		} else {
 			node.val = val;
 		}
-		if (isRed(node.left) && isRed(node.left.left)) {
-			node = rotateRight(node);
-		}
 		if (isRed(node.left) && isRed(node.right)) {
 			flipColors(node);
+		}
+		if (isRed(node.right)) {
+			node = rotateLeft(node);
+		}
+		if (isRed(node.left) && isRed(node.left.left)) {
+			node = rotateRight(node);
 		}
 		node.n = size(node.left) + 1 + size(node.right);
 		return node;
@@ -299,10 +300,24 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 	}
 
 	private int size(Node node) {
-		return node == null ? 0 : root.n;
+		return node == null ? 0 : node.n;
 	}
 
 	public static void main(String[] args) {
+		RedBlackBinarySearchTree<String, String> redBlackBinarySearchTree;
+
+		redBlackBinarySearchTree =
+				put(new String[]{"S", "E", "A", "R", "C", "H", "X", "M", "P", "L" });
+		System.out.println(redBlackBinarySearchTree);
+	}
+
+	private static RedBlackBinarySearchTree<String, String> put(String[] strs) {
+		RedBlackBinarySearchTree<String, String> redBlackBinarySearchTree =
+				new RedBlackBinarySearchTree();
+		for (String str : strs) {
+			redBlackBinarySearchTree.put(str, str);
+		}
+		return redBlackBinarySearchTree;
 	}
 
 }
