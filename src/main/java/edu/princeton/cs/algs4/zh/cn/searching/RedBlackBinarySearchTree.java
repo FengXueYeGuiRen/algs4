@@ -12,13 +12,15 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 	private Node root;
 
 	private class Node {
+		//  健
 		Key key;
+		//  相关联的值
 		Value val;
-
+		//  左右子树
 		Node left, right;
-
+		//  这棵子树重的结点总数
 		int n;
-
+		//  由其父结点指向它的链接的颜色
 		boolean isRed;
 
 		public Node(Key key, Value val, int n, boolean isRed) {
@@ -224,6 +226,7 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 
 	private Node put(Node node, Key key, Value val) {
 		if (node == null) {
+			//  标准的插入操作，和父结点用红链接相连
 			return new Node(key, val, 1, true);
 		}
 		int cmp = key.compareTo(node.key);
@@ -237,7 +240,7 @@ public class RedBlackBinarySearchTree<Key extends Comparable<Key>, Value>
 		if (isRed(node.left) && isRed(node.right)) {
 			flipColors(node);
 		}
-		if (isRed(node.right)) {
+		if (isRed(node.right) && !isRed(node.left)) {
 			node = rotateLeft(node);
 		}
 		if (isRed(node.left) && isRed(node.left.left)) {
