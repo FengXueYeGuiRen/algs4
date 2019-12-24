@@ -52,7 +52,11 @@ public class SequentialSearchSymbolTable<Key, Value>
 		if (node == null) {
 			return;
 		}
-		node.previous.next = node.next;
+		if (node.previous != null) {
+			node.previous.next = node.next;
+		} else if (node == first) {
+			first = null;
+		}
 		if (node.next != null) {
 			node.next.previous = node.previous;
 		}
