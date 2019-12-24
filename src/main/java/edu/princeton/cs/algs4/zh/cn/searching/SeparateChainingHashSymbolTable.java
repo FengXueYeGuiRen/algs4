@@ -13,6 +13,8 @@ import java.util.Random;
 public class SeparateChainingHashSymbolTable<Key, Value>
 		implements SymbolTable<Key, Value> {
 
+	private static final int INIT_CAPACITY = 4;
+
 	/**
 	 * 健值对总数
 	 */
@@ -27,9 +29,10 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 	private SequentialSearchSymbolTable<Key, Value>[] st;
 
 	public SeparateChainingHashSymbolTable(int m) {
+		//  创建 m 条链表
 		this.m = m;
 
-		st = (SequentialSearchSymbolTable<Key, Value>[]) new SequentialSearchSymbolTable[m];
+		st = new SequentialSearchSymbolTable[m];
 
 		for (int i = 0; i < m; ++i) {
 			st[i] = new SequentialSearchSymbolTable();
@@ -37,7 +40,7 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 	}
 
 	public SeparateChainingHashSymbolTable() {
-		this(997);
+		this(INIT_CAPACITY);
 	}
 
 	private int hash(Key key) {
@@ -88,36 +91,12 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 			return null;
 		}
 		SequentialSearchSymbolTable<Key, Value> s = st[hash(key)];
-		int size = s.size();
 
 		Value deletedValue = s.delete(key);
-
-		n += (s.size() - size);
-		return deletedValue;
-	}
-
-	/**
-	 * 健 key 在表中是否有对应的值(健 key 是否存在于表中)
-	 *
-	 * @param key
-	 * @return
-	 */
-	@Override
-	public boolean contains(Key key) {
-		if (key == null || isEmpty()) {
-			return false;
+		if (deletedValue != null) {
+			--n;
 		}
-		return st[hash(key)].contains(key);
-	}
-
-	/**
-	 * 表是否为空
-	 *
-	 * @return
-	 */
-	@Override
-	public boolean isEmpty() {
-		return size() < 1;
+		return deletedValue;
 	}
 
 	/**
@@ -160,7 +139,14 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 		deletes(nums, separateChainingHashST);
 
 		separateChainingHashST = put(nums);
+		separateChainingHashST = put(nums);
 		println(separateChainingHashST);
+
+		for (int num : nums) {
+			separateChainingHashST.put(num, null);
+			System.out.print("put(" + num + ", null): ");
+			println(separateChainingHashST);
+		}
 	}
 
 	private static SeparateChainingHashSymbolTable<Integer, String> put(int[] nums) {
@@ -185,7 +171,7 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 			SeparateChainingHashSymbolTable<Integer, String> separateChainingHashST) {
 		System.out.print("Output: ");
 		if (separateChainingHashST == null || separateChainingHashST.isEmpty()) {
-			System.out.println();
+			System.out.println("\n");
 			return;
 		}
 		System.out.print("(size: " + separateChainingHashST.size() + ")");
@@ -196,7 +182,7 @@ public class SeparateChainingHashSymbolTable<Key, Value>
 				System.out.print("{" + key + ", not contain}");
 			}
 		}
-		System.out.println("\n\n");
+		System.out.println("\n");
 	}
 
 	private static void deletes(
