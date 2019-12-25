@@ -13,27 +13,48 @@ import java.util.UUID;
 public class LinearProbingHashSymbolTable<Key, Value>
 		implements SymbolTable<Key, Value> {
 
-	private int n;
-	private int m;
+	private static final int INIT_CAPACITY = 4;
 
+	/**
+	 * 符号表中健值对的总数
+	 */
+	private int n;
+	/**
+	 * 线性探测表的大小
+	 */
+	private int m;
+	/**
+	 * 健
+	 */
 	private Key[] keys;
+	/**
+	 * 值
+	 */
 	private Value[] vals;
 
-	public LinearProbingHashSymbolTable(int m) {
-		this.n = 0;
-		this.m = m;
-		keys = (Key[]) new Object[m];
-		vals = (Value[]) new Object[m];
+	public LinearProbingHashSymbolTable() {
+		this(INIT_CAPACITY);
 	}
 
-	private void resize(int m) {
+	public LinearProbingHashSymbolTable(int capacity) {
+		this.n = 0;
+		this.m = capacity;
+		this.keys = (Key[]) new Object[m];
+		this.vals = (Value[]) new Object[m];
+	}
+
+	/**
+	 * 调整线性探测散列表
+	 *
+	 * @param capacity
+	 */
+	private void resize(int capacity) {
 		LinearProbingHashSymbolTable<Key, Value> t =
-				new LinearProbingHashSymbolTable<>(m);
+				new LinearProbingHashSymbolTable<>(capacity);
 		for (int i = 0; i < this.m; ++i) {
-			if (keys[i] == null) {
-				continue;
+			if (keys[i] != null) {
+				t.put(keys[i], vals[i]);
 			}
-			t.put(keys[i], vals[i]);
 		}
 		this.m = t.m;
 
@@ -61,10 +82,11 @@ public class LinearProbingHashSymbolTable<Key, Value>
 			return;
 		}
 		if (n == m / 2) {
+			//  将 m 加倍
 			resize(m * 2);
 		}
 		int i = hash(key);
-		while (keys[i] != null && keys[i] != key) {
+		while (keys[i] != null && !keys[i].equals(key)) {
 			i = (++i) % m;
 		}
 		keys[i] = key;
@@ -85,7 +107,7 @@ public class LinearProbingHashSymbolTable<Key, Value>
 		}
 		Value value = null;
 		for (int i = hash(key); keys[i] != null; i = (++i) % m) {
-			if (keys[i] == key) {
+			if (keys[i].equals(key)) {
 				value = vals[i];
 				break;
 			}
@@ -100,33 +122,34 @@ public class LinearProbingHashSymbolTable<Key, Value>
 	 */
 	@Override
 	public Value delete(Key key) {
-		Value val = null;
-		if (key == null || isEmpty()) {
+		if (key == null || !contains(key)) {
 			return null;
 		}
 		int i = hash(key);
-		for (; keys[i] != null; i = (++i) % m) {
-			if (keys[i] == key) {
-				val = vals[i];
-
-				keys[i] = null;
-				vals[i] = null;
-
-				i = (++i) % m;
-				break;
-			}
+		while (!key.equals(keys[i])) {
+			i = (++i) % m;
 		}
+		Value val = vals[i];
+
+		keys[i] = null;
+		vals[i] = null;
+
+		i = (++i) % m;
 		while (keys[i] != null) {
-			Key k = keys[i];
-			Value v = vals[i];
+			Key keyToRedo = keys[i];
+			Value valToRedo = vals[i];
 			keys[i] = null;
 			vals[i] = null;
 
-			put(k, v);
+			--n;
+			put(keyToRedo, valToRedo);
 
 			i = (++i) % m;
 		}
 		--n;
+		if (n > 0 && n == m / 8) {
+			resize(m / 2);
+		}
 		return val;
 	}
 
@@ -138,7 +161,7 @@ public class LinearProbingHashSymbolTable<Key, Value>
 	 */
 	@Override
 	public boolean contains(Key key) {
-		if (key == null) {
+		if (key == null || isEmpty()) {
 			return false;
 		}
 		return get(key) != null;
