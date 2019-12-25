@@ -52,7 +52,7 @@
 3.4 散列表(293)| |第3章 查找(227)||
 3.4.1 散列函数(293)|3.4 散列表(293)|第3章 查找(227)||
 3.4.2 基于拉链法的散列表(297)|3.4 散列表(293)|第3章 查找(227)|[SeparateChainingHashSymbolTable.java(算法 3.5)](searching/SeparateChainingHashSymbolTable.java)|
-3.4.3 基于线性探测法的散列表(300)|3.4 散列表(293)|第3章 查找(227)||
+3.4.3 基于线性探测法的散列表(300)|3.4 散列表(293)|第3章 查找(227)|[LinearProbingHashSymbolTable.java(算法 3.5)](searching/LinearProbingHashSymbolTable.java)|
 3.4.4 调整数组大小(304)|3.4 散列表(293)|第3章 查找(227)||
 3.4.5 内存使用(306)|3.4 散列表(293)|第3章 查找(227)||
 3.5 应用(312)| |第3章 查找(227)||
