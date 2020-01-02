@@ -1,5 +1,9 @@
 package edu.princeton.cs.algs4.zh.cn.graph;
 
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.zh.cn.graph.undirected.AdjacencyListsGraph;
 import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
 
 /**
@@ -13,6 +17,7 @@ public class DepthFirstCC extends ConnectedComponents {
 	private boolean[] markeds;
 	private int count;
 	private int[] ids;
+	private int[] sizes;
 
 	/**
 	 * 预处理构造函数
@@ -22,16 +27,20 @@ public class DepthFirstCC extends ConnectedComponents {
 	public DepthFirstCC(Graph G) {
 		markeds = new boolean[G.V()];
 		ids = new int[G.V()];
+		sizes = new int[G.V()];
 
 		for (int v = 0; v < G.V(); ++v) {
-			dfs(G, v);
-			++count;
+			if (!markeds[v]) {
+				dfs(G, v);
+				++count;
+			}
 		}
 	}
 
 	private void dfs(Graph G, int v) {
 		markeds[v] = true;
 		ids[v] = count;
+		++sizes[count];
 		for (int w : G.adj(v)) {
 			if (!markeds[w]) {
 				dfs(G, w);
@@ -77,6 +86,35 @@ public class DepthFirstCC extends ConnectedComponents {
 			return -1;
 		}
 		return ids[v];
+	}
+
+	public int size(int v) {
+		if (v < 0 || v >= ids.length) {
+			return 0;
+		}
+		return sizes[ids[v]];
+	}
+
+	public static void main(String[] args) {
+		Graph graph = new AdjacencyListsGraph(new In(args[0]));
+
+		DepthFirstCC cc = new DepthFirstCC(graph);
+
+		int components = cc.count();
+		StdOut.println(components + " components");
+		Bag<Integer>[] bags = new Bag[components];
+		for (int component = 0; component < components; ++component) {
+			bags[component] = new Bag<>();
+		}
+		for (int v = 0; v < graph.V(); ++v) {
+			bags[cc.id(v)].add(v);
+		}
+		for (Bag<Integer> bag : bags) {
+			for (int v : bag) {
+				StdOut.print(v + " ");
+			}
+			StdOut.println();
+		}
 	}
 
 }
