@@ -8,7 +8,7 @@
 4.1.2 表示无向图的数据类型(333)|4.1 无向图(331)|第4章 图(329)|[AdjacencyListsGraph.java(邻接表无向图)](graph/undirected/AdjacencyListsGraph.java)|
 4.1.3 深度优先搜索(338)|4.1 无向图(331)|第4章 图(329)|[DepthFirstGraphSearch.java](graph/DepthFirstGraphSearch.java)|
 4.1.4 寻找路径(342)|4.1 无向图(331)|第4章 图(329)|[DepthFirstGraphPaths.java(算法 4.1)](graph/DepthFirstGraphPaths.java)|
-4.1.5 广度优先搜索(344)|4.1 无向图(331)|第4章 图(329)|[BreadthFirstGraphPaths.java(算法 4.1)](graph/BreadthFirstGraphPaths.java)|
+4.1.5 广度优先搜索(344)|4.1 无向图(331)|第4章 图(329)|[BreadthFirstGraphPaths.java(算法 4.2)](graph/BreadthFirstGraphPaths.java)|
 4.1.6 连通分量(349)|4.1 无向图(331)|第4章 图(329)||
 4.1.7 符号图(352)|4.1 无向图(331)|第4章 图(329)||
 4.1.8 总结(358)|4.1 无向图(331)|第4章 图(329)||

@@ -18,6 +18,7 @@ import java.util.Stack;
  */
 public class BreadthFirstGraphPaths extends GraphPaths {
 
+	private static final int INFINITY = Integer.MAX_VALUE;
 	/**
 	 * 起点
 	 */
@@ -38,10 +39,15 @@ public class BreadthFirstGraphPaths extends GraphPaths {
 	 * @param s
 	 */
 	public BreadthFirstGraphPaths(Graph G, int s) {
+		if (s < 0 || s >= G.V()) {
+			throw new IllegalArgumentException("vertex " + s + " is not between 0 and " + (G.V() - 1));
+		}
 		this.s = s;
 		markeds = new boolean[G.V()];
 		edgeTos = new int[G.V()];
-
+		for (int v = 0; v < edgeTos.length; ++v) {
+			edgeTos[v] = INFINITY;
+		}
 		bfs(G, s);
 	}
 
@@ -83,6 +89,9 @@ public class BreadthFirstGraphPaths extends GraphPaths {
 	 */
 	@Override
 	public boolean hasPathTo(int v) {
+		if (v < 0 || v >= markeds.length) {
+			return false;
+		}
 		return markeds[v];
 	}
 
