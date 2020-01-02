@@ -6,16 +6,17 @@ import edu.princeton.cs.algs4.zh.cn.graph.undirected.AdjacencyListsGraph;
 import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
 
 /**
- * 深度优先搜索
+ * 深度优先搜索(4.1.3)
+ * {@link edu.princeton.cs.algs4.DepthFirstSearch}
  *
  * @author FXYGR @date 2019-12-30
  */
-public class DepthFirstSearch extends GraphSearch {
+public class DepthFirstGraphSearch extends GraphSearch {
 
 	private boolean[] marked;
 	private int count;
 
-	public DepthFirstSearch() {
+	public DepthFirstGraphSearch() {
 	}
 
 	/**
@@ -24,8 +25,12 @@ public class DepthFirstSearch extends GraphSearch {
 	 * @param G
 	 * @param s
 	 */
-	public DepthFirstSearch(Graph G, int s) {
+	public DepthFirstGraphSearch(Graph G, int s) {
 		marked = new boolean[G.V()];
+		if (s < 0 || s >= marked.length) {
+			throw new IllegalArgumentException(
+					"vertex " + s + " is not between 0 and " + (marked.length - 1));
+		}
 		dfs(G, s);
 	}
 
@@ -47,6 +52,9 @@ public class DepthFirstSearch extends GraphSearch {
 	 */
 	@Override
 	public boolean marked(int v) {
+		if (v < 0 || v >= marked.length) {
+			return false;
+		}
 		return marked[v];
 	}
 
@@ -63,7 +71,7 @@ public class DepthFirstSearch extends GraphSearch {
 	public static void main(String[] args) {
 		Graph G = new AdjacencyListsGraph(new In(args[0]));
 		int s = Integer.parseInt(args[1]);
-		GraphSearch search = new DepthFirstSearch(G, s);
+		GraphSearch search = new DepthFirstGraphSearch(G, s);
 
 		for (int v = 0; v < G.V(); ++v) {
 			if (search.marked(v)) {

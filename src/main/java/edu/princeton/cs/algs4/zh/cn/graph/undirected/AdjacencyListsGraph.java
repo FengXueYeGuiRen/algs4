@@ -24,7 +24,6 @@ public class AdjacencyListsGraph extends Graph {
 	 */
 	private Bag<Integer>[] adj;
 
-
 	/**
 	 * 创建一个含有 V 个顶点但不含有边的图
 	 *
