@@ -40,7 +40,8 @@ public class BreadthFirstGraphPaths extends GraphPaths {
 	 */
 	public BreadthFirstGraphPaths(Graph G, int s) {
 		if (s < 0 || s >= G.V()) {
-			throw new IllegalArgumentException("vertex " + s + " is not between 0 and " + (G.V() - 1));
+			throw new IllegalArgumentException(
+					"vertex " + s + " is not between 0 and " + (G.V() - 1));
 		}
 		this.s = s;
 		markeds = new boolean[G.V()];

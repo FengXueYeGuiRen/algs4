@@ -11,11 +11,13 @@ import java.util.Iterator;
 
 /**
  * 使用深度优先搜索查找途中的路径(寻找路径 4.1.4 算法4.1)
+ * {@link edu.princeton.cs.algs4.DepthFirstPaths}
  *
  * @author FXYGR @date 2019-12-31
  */
-public class DepthFirstPaths extends GraphPaths {
+public class DepthFirstGraphPaths extends GraphPaths {
 
+	private static final int INFINITY = Integer.MAX_VALUE;
 	/**
 	 * 起点
 	 */
@@ -35,11 +37,17 @@ public class DepthFirstPaths extends GraphPaths {
 	 * @param G
 	 * @param s
 	 */
-	public DepthFirstPaths(Graph G, int s) {
+	public DepthFirstGraphPaths(Graph G, int s) {
+		if (s < 0 || s >= G.V()) {
+			throw new IllegalArgumentException(
+					"vertex " + s + " is not between 0 and " + (G.V() - 1));
+		}
 		this.s = s;
 		marked = new boolean[G.V()];
 		edgeTo = new int[G.V()];
-
+		for (int v = 0; v < G.V(); ++v) {
+			edgeTo[v] = INFINITY;
+		}
 		dfs(G, s);
 	}
 
@@ -61,6 +69,9 @@ public class DepthFirstPaths extends GraphPaths {
 	 */
 	@Override
 	public boolean hasPathTo(int v) {
+		if (s < 0 || s >= marked.length) {
+			return false;
+		}
 		return marked[v];
 	}
 
@@ -96,7 +107,7 @@ public class DepthFirstPaths extends GraphPaths {
 		AdjacencyListsGraph graph = new AdjacencyListsGraph(new In(args[0]));
 		int s = Integer.parseInt(args[1]);
 
-		DepthFirstPaths paths = new DepthFirstPaths(graph, s);
+		GraphPaths paths = new DepthFirstGraphPaths(graph, s);
 		for (int v = 0; v < graph.V(); ++v) {
 			StdOut.print(s + " to " + v + ": ");
 			if (!paths.hasPathTo(v)) {
