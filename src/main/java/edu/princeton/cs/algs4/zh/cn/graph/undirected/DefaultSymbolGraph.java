@@ -45,7 +45,7 @@ public class DefaultSymbolGraph extends SymbolGraph {
 			//  为每个不同的字符串关联一个索引
 			for (int i = 0; i < a.length; ++i) {
 				if (!symbolTable.contains(a[i])) {
-					symbolTable.put(a[i], i);
+					symbolTable.put(a[i], symbolTable.size());
 				}
 			}
 		}
