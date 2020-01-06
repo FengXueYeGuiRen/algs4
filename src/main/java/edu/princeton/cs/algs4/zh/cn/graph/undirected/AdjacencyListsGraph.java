@@ -3,6 +3,9 @@ package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 /**
  * (邻接表数组)无向图(Undirected Graph) 数据类型
  * {@link edu.princeton.cs.algs4.Graph}
@@ -106,7 +109,19 @@ public class AdjacencyListsGraph extends Graph {
 	 */
 	@Override
 	public Iterable<Integer> adj(int v) {
+		if (v < 0 || v > V) {
+			return emptyIterable();
+		}
 		return adj[v];
+	}
+
+	private static Iterable<Integer> emptyIterable() {
+		return new Iterable<Integer>() {
+			@Override
+			public Iterator<Integer> iterator() {
+				return Collections.emptyIterator();
+			}
+		};
 	}
 
 }

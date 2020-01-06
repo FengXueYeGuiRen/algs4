@@ -1,5 +1,5 @@
 /**
- * description
+ * 有向图(第4章 4.2)
  *
  * @author FXYGR @date 2020-01-05
  */
