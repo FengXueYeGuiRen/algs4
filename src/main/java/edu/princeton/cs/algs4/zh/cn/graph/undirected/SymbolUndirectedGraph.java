@@ -3,6 +3,7 @@ package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.zh.cn.graph.SymbolGraph;
 import edu.princeton.cs.algs4.zh.cn.searching.SeparateChainingHashSymbolTable;
 import edu.princeton.cs.algs4.zh.cn.searching.SymbolTable;
 
@@ -12,7 +13,7 @@ import edu.princeton.cs.algs4.zh.cn.searching.SymbolTable;
  *
  * @author FXYGR @date 2020-01-03
  */
-public class DefaultSymbolGraph extends SymbolGraph {
+public class SymbolUndirectedGraph extends SymbolGraph {
 
 	/**
 	 * 符号名 -> 索引
@@ -33,7 +34,7 @@ public class DefaultSymbolGraph extends SymbolGraph {
 	 * @param fileName 图文件
 	 * @param delim    分割符
 	 */
-	public DefaultSymbolGraph(String fileName, String delim) {
+	public SymbolUndirectedGraph(String fileName, String delim) {
 		//  基于拉链法的散列表(3.4.2 算法3.5)
 		symbolTable = new SeparateChainingHashSymbolTable();
 		//  第一遍
@@ -122,7 +123,7 @@ public class DefaultSymbolGraph extends SymbolGraph {
 		String fileName = args[0];
 		String delim = args[1];
 
-		SymbolGraph symbolGraph = new DefaultSymbolGraph(fileName, delim);
+		SymbolGraph symbolGraph = new SymbolUndirectedGraph(fileName, delim);
 
 		Graph G = symbolGraph.G();
 
