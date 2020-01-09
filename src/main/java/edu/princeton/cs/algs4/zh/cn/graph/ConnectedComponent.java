@@ -7,9 +7,9 @@ import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
  *
  * @author FXYGR @date 2020-01-02
  */
-public abstract class ConnectedComponents {
+public abstract class ConnectedComponent {
 
-	public ConnectedComponents() {
+	public ConnectedComponent() {
 	}
 
 	/**
@@ -17,7 +17,7 @@ public abstract class ConnectedComponents {
 	 *
 	 * @param G
 	 */
-	public ConnectedComponents(Graph G) {
+	public ConnectedComponent(Graph G) {
 	}
 
 	/**

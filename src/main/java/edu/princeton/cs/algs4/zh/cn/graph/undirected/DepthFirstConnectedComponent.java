@@ -1,10 +1,9 @@
-package edu.princeton.cs.algs4.zh.cn.graph;
+package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.AdjacencyListsGraph;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
+import edu.princeton.cs.algs4.zh.cn.graph.ConnectedComponent;
 
 /**
  * 使用深度优先搜索找出图中的所有连通分量(连通分量 4.1.6 算法4.3)
@@ -12,7 +11,7 @@ import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
  *
  * @author FXYGR @date 2020-01-02
  */
-public class DepthFirstCC extends ConnectedComponents {
+public class DepthFirstConnectedComponent extends ConnectedComponent {
 
 	private boolean[] markeds;
 	private int count;
@@ -24,7 +23,7 @@ public class DepthFirstCC extends ConnectedComponents {
 	 *
 	 * @param G
 	 */
-	public DepthFirstCC(Graph G) {
+	public DepthFirstConnectedComponent(Graph G) {
 		markeds = new boolean[G.V()];
 		ids = new int[G.V()];
 		sizes = new int[G.V()];
@@ -98,7 +97,7 @@ public class DepthFirstCC extends ConnectedComponents {
 	public static void main(String[] args) {
 		Graph graph = new AdjacencyListsGraph(new In(args[0]));
 
-		DepthFirstCC cc = new DepthFirstCC(graph);
+		DepthFirstConnectedComponent cc = new DepthFirstConnectedComponent(graph);
 
 		int components = cc.count();
 		StdOut.println(components + " components");

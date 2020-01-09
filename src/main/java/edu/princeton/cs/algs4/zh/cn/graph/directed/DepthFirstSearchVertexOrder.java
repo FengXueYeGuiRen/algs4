@@ -11,6 +11,7 @@ import java.util.Stack;
  * @author FXYGR @date 2020-01-08
  */
 public class DepthFirstSearchVertexOrder {
+
 	private boolean[] markeds;
 	/**
 	 * 所有顶点的前序排列
