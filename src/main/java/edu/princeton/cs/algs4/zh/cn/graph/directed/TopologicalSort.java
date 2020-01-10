@@ -1,5 +1,9 @@
 package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedCycle;
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
+import edu.princeton.cs.algs4.zh.cn.graph.Topological;
+
 /**
  * 拓扑排序(4.2.4.3 算法4.5)
  * {@link edu.princeton.cs.algs4.Topological}

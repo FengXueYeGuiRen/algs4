@@ -2,6 +2,7 @@ package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
 
 import java.util.Collections;
 import java.util.Iterator;

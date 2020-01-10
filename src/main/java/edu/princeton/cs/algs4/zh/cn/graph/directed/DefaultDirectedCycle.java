@@ -1,5 +1,8 @@
 package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedCycle;
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
+
 import java.util.Stack;
 
 /**

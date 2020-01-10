@@ -1,4 +1,4 @@
-package edu.princeton.cs.algs4.zh.cn.graph.directed;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 /**
  * 顶点对可达性 API(4.2.5.4)

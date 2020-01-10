@@ -1,7 +1,5 @@
 package edu.princeton.cs.algs4.zh.cn.graph;
 
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
-
 /**
  * 符号图(用符号做为顶点名的图) API(4.1.7)
  *

@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.zh.cn.graph.ConnectedComponent;
+import edu.princeton.cs.algs4.zh.cn.graph.Graph;
 
 /**
  * 使用深度优先搜索找出图中的所有连通分量(连通分量 4.1.6 算法4.3)

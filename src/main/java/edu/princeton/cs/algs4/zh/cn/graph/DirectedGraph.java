@@ -1,7 +1,6 @@
-package edu.princeton.cs.algs4.zh.cn.graph.directed;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
 
 /**
  * 有向图 API(4.2.2)

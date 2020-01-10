@@ -1,7 +1,5 @@
 package edu.princeton.cs.algs4.zh.cn.graph;
 
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
-
 /**
  * 图搜索 API
  *

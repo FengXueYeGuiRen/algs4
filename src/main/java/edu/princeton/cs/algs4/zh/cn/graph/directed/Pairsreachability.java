@@ -1,5 +1,8 @@
 package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
+import edu.princeton.cs.algs4.zh.cn.graph.TransitiveClosure;
+
 /**
  * 顶点对可达性(4.2.5.4)
  * {@link edu.princeton.cs.algs4.TransitiveClosure}

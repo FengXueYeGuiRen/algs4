@@ -1,6 +1,7 @@
 package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
 import edu.princeton.cs.algs4.zh.cn.graph.SymbolGraph;
 import edu.princeton.cs.algs4.zh.cn.searching.SeparateChainingHashSymbolTable;
 import edu.princeton.cs.algs4.zh.cn.searching.SymbolTable;

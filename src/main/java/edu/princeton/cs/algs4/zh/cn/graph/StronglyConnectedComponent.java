@@ -1,7 +1,4 @@
-package edu.princeton.cs.algs4.zh.cn.graph.directed;
-
-import edu.princeton.cs.algs4.zh.cn.graph.ConnectedComponent;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 /**
  * 强连通分量(SCC) API(4.2.5.1)

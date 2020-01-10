@@ -3,7 +3,8 @@ package edu.princeton.cs.algs4.zh.cn.graph.directed;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.zh.cn.graph.DepthFirstGraphSearch;
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
+import edu.princeton.cs.algs4.zh.cn.graph.undirected.DepthFirstGraphSearch;
 
 /**
  * 有向图的可达性(4.2.3 算法4.4)

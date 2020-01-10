@@ -1,9 +1,9 @@
-package edu.princeton.cs.algs4.zh.cn.graph;
+package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.AdjacencyListsGraph;
-import edu.princeton.cs.algs4.zh.cn.graph.undirected.Graph;
+import edu.princeton.cs.algs4.zh.cn.graph.Graph;
+import edu.princeton.cs.algs4.zh.cn.graph.GraphSearch;
 
 /**
  * 深度优先搜索(4.1.3)

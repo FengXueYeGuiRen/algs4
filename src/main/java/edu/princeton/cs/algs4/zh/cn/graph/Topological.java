@@ -1,4 +1,4 @@
-package edu.princeton.cs.algs4.zh.cn.graph.directed;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 /**
  * 拓扑排序 API(4.2.4.3)

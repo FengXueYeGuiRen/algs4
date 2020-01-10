@@ -1,5 +1,8 @@
 package edu.princeton.cs.algs4.zh.cn.graph.directed;
 
+import edu.princeton.cs.algs4.zh.cn.graph.DirectedGraph;
+import edu.princeton.cs.algs4.zh.cn.graph.StronglyConnectedComponent;
+
 /**
  * 计算强连通分量的 Kosaraju 算法(4.2.5.3 算法4.6)
  * {@link edu.princeton.cs.algs4.KosarajuSharirSCC}

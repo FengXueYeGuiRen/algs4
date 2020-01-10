@@ -1,4 +1,4 @@
-package edu.princeton.cs.algs4.zh.cn.graph.undirected;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 import edu.princeton.cs.algs4.In;
 

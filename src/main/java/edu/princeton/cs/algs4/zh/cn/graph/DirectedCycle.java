@@ -1,4 +1,4 @@
-package edu.princeton.cs.algs4.zh.cn.graph.directed;
+package edu.princeton.cs.algs4.zh.cn.graph;
 
 /**
  * 有向环 API(4.2.4.2)

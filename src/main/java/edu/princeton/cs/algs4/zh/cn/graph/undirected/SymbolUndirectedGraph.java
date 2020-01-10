@@ -3,6 +3,7 @@ package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.zh.cn.graph.Graph;
 import edu.princeton.cs.algs4.zh.cn.graph.SymbolGraph;
 import edu.princeton.cs.algs4.zh.cn.searching.SeparateChainingHashSymbolTable;
 import edu.princeton.cs.algs4.zh.cn.searching.SymbolTable;
