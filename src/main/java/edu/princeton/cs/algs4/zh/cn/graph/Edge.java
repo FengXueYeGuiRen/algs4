@@ -38,9 +38,10 @@ public abstract class Edge implements Comparable<Edge> {
 	/**
 	 * 另一个顶点
 	 *
+	 * @param v
 	 * @return
 	 */
-	public abstract int other();
+	public abstract int other(int v);
 
 	/**
 	 * 将这条边与 that 比较
