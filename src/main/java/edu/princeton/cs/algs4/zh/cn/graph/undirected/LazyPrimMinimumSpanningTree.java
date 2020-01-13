@@ -1,6 +1,8 @@
 package edu.princeton.cs.algs4.zh.cn.graph.undirected;
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.zh.cn.graph.Edge;
 import edu.princeton.cs.algs4.zh.cn.graph.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.zh.cn.graph.MinimumSpanningTree;
@@ -27,6 +29,8 @@ public class LazyPrimMinimumSpanningTree implements MinimumSpanningTree {
 	 */
 	private BinaryHeapMinPQ<Edge> minPQ;
 
+	private double weights;
+
 	/**
 	 * 构造函数
 	 *
@@ -36,8 +40,17 @@ public class LazyPrimMinimumSpanningTree implements MinimumSpanningTree {
 		markeds = new boolean[G.V()];
 		mstEdges = new Queue<>();
 		minPQ = new BinaryHeapMinPQ<>(G.V());
-		//  假设 G 是连通的
-		visit(G, 0);
+		weights = 0;
+		//  G 可能是不连通的
+		for (int v = 0; v < G.V(); ++v) {
+			if (!markeds[v]) {
+				prim(G, v);
+			}
+		}
+	}
+
+	private void prim(EdgeWeightedGraph G, int s) {
+		visit(G, s);
 		while (!minPQ.isEmpty()) {
 			//  从 pq 中得到权重最小的边
 			Edge e = minPQ.delMin();
@@ -48,6 +61,7 @@ public class LazyPrimMinimumSpanningTree implements MinimumSpanningTree {
 			}
 			//  将边添加到树中
 			mstEdges.enqueue(e);
+			weights += e.weight();
 			//  将顶点 v 添加到树种
 			if (!markeds[v]) {
 				visit(G, v);
@@ -86,11 +100,18 @@ public class LazyPrimMinimumSpanningTree implements MinimumSpanningTree {
 	 */
 	@Override
 	public double weight() {
-		double weights = 0;
-		for (Edge e : mstEdges) {
-			weights += e.weight();
-		}
 		return weights;
+	}
+
+	public static void main(String[] args) {
+		In in = new In(args[0]);
+		EdgeWeightedGraph G = new DefaultEdgeWeightedGraph(in);
+
+		MinimumSpanningTree mst = new LazyPrimMinimumSpanningTree(G);
+		for (Edge e : mst.edges()) {
+			StdOut.println(e);
+		}
+		StdOut.println(mst.weight());
 	}
 
 }
