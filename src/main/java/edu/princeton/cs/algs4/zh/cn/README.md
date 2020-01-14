@@ -24,7 +24,7 @@
 4.3.2 加权无向图的数据类型(393)|4.3 最小生成树(390)|第4章 图(329)|[DefaultEdgeWeightedGraph.java](graph/undirected/DefaultEdgeWeightedGraph.java)|
 4.3.3 最小生成树的API和测试用例(396)|4.3 最小生成树(390)|第4章 图(329)||
 4.3.4 Prim算法(398)|4.3 最小生成树(390)|第4章 图(329)|[LazyPrimMinimumSpanningTree.java](graph/undirected/LazyPrimMinimumSpanningTree.java)|
-4.3.5 Prim算法的即时实现(401)|4.3 最小生成树(390)|第4章 图(329)||
+4.3.5 Prim算法的即时实现(401)|4.3 最小生成树(390)|第4章 图(329)|[PrimMinimumSpanningTree.java(算法 4.7)](graph/undirected/PrimMinimumSpanningTree.java)|
 4.3.6 Kruskal算法(404)|4.3 最小生成树(390)|第4章 图(329)||
 4.3.7 展望(407)|4.3 最小生成树(390)|第4章 图(329)||
 4.4 最短路径(412)| |第4章 图(329)||

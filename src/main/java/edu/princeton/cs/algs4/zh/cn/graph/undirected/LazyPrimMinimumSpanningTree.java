@@ -62,11 +62,11 @@ public class LazyPrimMinimumSpanningTree implements MinimumSpanningTree {
 			//  将边添加到树中
 			mstEdges.enqueue(e);
 			weights += e.weight();
-			//  将顶点 v 添加到树种
+			//  将顶点 v 添加到树中
 			if (!markeds[v]) {
 				visit(G, v);
 			}
-			//  将顶点 w 添加到树种
+			//  将顶点 w 添加到树中
 			if (!markeds[w]) {
 				visit(G, w);
 			}
