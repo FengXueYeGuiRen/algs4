@@ -42,12 +42,19 @@ public class PrimMinimumSpanningTree implements MinimumSpanningTree {
 		markeds = new boolean[G.V()];
 		minPQ = new IndexMinPriorityQueue<>(G.V());
 		distTos = new double[G.V()];
-		for (int i = 0; i < distTos.length; ++i) {
-			distTos[i] = Double.POSITIVE_INFINITY;
+		for (int v = 0; v < distTos.length; ++v) {
+			distTos[v] = Double.POSITIVE_INFINITY;
 		}
-		distTos[0] = 0.0;
-		//  用顶点 0 和权重 0 初始化 minPQ
-		minPQ.insert(0, distTos[0]);
+		for (int v = 0; v < G.V(); ++v) {
+			if (!markeds[v]) {
+				prim(G, v);
+			}
+		}
+	}
+
+	private void prim(EdgeWeightedGraph G, int v) {
+		distTos[v] = 0.0;
+		minPQ.insert(v, distTos[v]);
 		while (!minPQ.isEmpty()) {
 			//  将最近的顶点添加到树中
 			visit(G, minPQ.delMin());
@@ -83,13 +90,14 @@ public class PrimMinimumSpanningTree implements MinimumSpanningTree {
 	 */
 	@Override
 	public Iterable<Edge> edges() {
-		Queue<Edge> queue = new Queue<>();
-		for (Edge e : edgeTos) {
+		Queue<Edge> mst = new Queue<>();
+		for (int v = 0; v < edgeTos.length; ++v) {
+			Edge e = edgeTos[v];
 			if (e != null) {
-				queue.enqueue(e);
+				mst.enqueue(e);
 			}
 		}
-		return queue;
+		return mst;
 	}
 
 	/**
@@ -99,11 +107,9 @@ public class PrimMinimumSpanningTree implements MinimumSpanningTree {
 	 */
 	@Override
 	public double weight() {
-		double weights = 0;
-		for (double weight : distTos) {
-			if (weight != Double.POSITIVE_INFINITY) {
-				weights += weight;
-			}
+		double weights = 0.0;
+		for (Edge e : edges()) {
+			weights += e.weight();
 		}
 		return weights;
 	}
