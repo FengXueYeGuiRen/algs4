@@ -10,28 +10,41 @@ import java.util.Arrays;
  */
 public class LSDStringSort {
 
-	public static String[] sort(String[] a, int sw) {
-		return sort(a, sw, 256);
+	public static String[] sort(String[] a) {
+		if (a == null) {
+			return a;
+		}
+		return sort(a, a[0].length());
 	}
 
-	public static String[] sort(String[] a, int sw, int r) {
+	public static String[] sort(String[] a, int w) {
+		//  通过后 w 个字符将 a[] 排序
+		return sort(a, w, 256);
+	}
+
+	public static String[] sort(String[] a, int w, int r) {
 		if (a == null) {
 			return a;
 		}
 		int aLength = a.length;
-		String[] aux = new String[a.length];
+		String[] aux = new String[aLength];
 		int[] counts;
-		for (int w = sw - 1; w >= 0; --w) {
+		for (int d = w - 1; d >= 0; --d) {
+			//  根据第 d 个字符用键索引计数法排序
 			counts = new int[r + 1];
+			//  计算出现频率
 			for (int i = 0; i < aLength; ++i) {
-				++counts[a[i].charAt(w) + 1];
+				++counts[a[i].charAt(d) + 1];
 			}
+			//  将频率转换为索引
 			for (int i = 0; i < r; ++i) {
 				counts[i + 1] += counts[i];
 			}
+			//  将元素分类
 			for (int i = 0; i < aLength; ++i) {
-				aux[counts[a[i].charAt(w)]++] = a[i];
+				aux[counts[a[i].charAt(d)]++] = a[i];
 			}
+			//  回写
 			for (int i = 0; i < aLength; ++i) {
 				a[i] = aux[i];
 			}
