@@ -51,10 +51,10 @@ public class MSDStringSort {
 		if (lo >= hi) {
 			return a;
 		}
-		/*if (hi <= lo + M) {
+		if (hi <= lo + M) {
 			InsertionSort.sort(a, lo, hi, d);
 			return a;
-		}*/
+		}
 		int[] counts = new int[R + 2];
 		//  计算频率
 		for (int i = lo; i <= hi; ++i) {
@@ -91,7 +91,7 @@ public class MSDStringSort {
 		System.out.println("targets: " + Arrays.toString(a));
 		System.out.println();
 
-		a = new String[]{"09", "00", "08", "11", "07", "22", "06", "33", "5", "44", "04", "55", "03", "66", "02", "77", "01", "88", "00", "99"};
+		a = new String[]{"09", "00", "08", "11", "07", "22", "06", "33", "5", "44", "04", "", "03", "66", "02", "77", "01", "88", "00", "99"};
 
 		System.out.println("sources: " + Arrays.toString(a));
 		InsertionSort.sort(a, 0, a.length - 1, 0);

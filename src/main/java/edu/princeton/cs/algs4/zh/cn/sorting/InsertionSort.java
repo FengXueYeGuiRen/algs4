@@ -79,7 +79,7 @@ public class InsertionSort extends AbstractSort {
 			}
 			int j = i + 1;
 			String temp = a[j];
-			for (; j > lo && less(substring(a[j], d), substring(a[j - 1], d)); --j) {
+			for (; j > lo && less(temp, substring(a[j - 1], d)); --j) {
 				a[j] = a[j - 1];
 			}
 			a[j] = temp;
