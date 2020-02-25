@@ -63,6 +63,36 @@ public class InsertionSort extends AbstractSort {
 		}
 	}
 
+	public static void sort(String[] a, int lo, int hi, int d) {
+		//  从第 d 个字符开始对 a[lo] 到 a[hi] 排序
+		if (a == null) {
+			return;
+		}
+		lo = lo >= 0 ? lo : 0;
+		hi = hi < a.length ? hi : (a.length - 1);
+		if (lo >= hi) {
+			return;
+		}
+		for (int i = lo; i < hi; ++i) {
+			if (substring(a[i], d).compareTo(substring(a[i + 1], d)) <= 0) {
+				continue;
+			}
+			int j = i + 1;
+			String temp = a[j];
+			for (; j > lo && less(substring(a[j], d), substring(a[j - 1], d)); --j) {
+				a[j] = a[j - 1];
+			}
+			a[j] = temp;
+		}
+	}
+
+	private static String substring(String s, int beginIndex) {
+		if (s == null || s.length() <= beginIndex) {
+			return "";
+		}
+		return s.substring(beginIndex);
+	}
+
 	public static void exchSort(Comparable[] a) {
 		//  数组长度
 		int N = a.length;
