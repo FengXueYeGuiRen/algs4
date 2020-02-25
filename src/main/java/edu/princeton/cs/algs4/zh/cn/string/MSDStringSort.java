@@ -45,7 +45,7 @@ public class MSDStringSort {
 			++counts[charAt(a[i], d) + 2];
 		}
 		for (int r = 0; r < R + 1; ++r) {
-			counts[r + 1] = counts[r];
+			counts[r + 1] += counts[r];
 		}
 		for (int i = lo; i <= hi; ++i) {
 			aux[counts[charAt(a[i], d) + 1]++] = a[i];
@@ -54,13 +54,17 @@ public class MSDStringSort {
 			a[i] = aux[i - lo];
 		}
 		for (int r = 0; r < R; ++r) {
-			a = sort(a, lo + counts[r], lo + counts[r + 1] - 1, d + 1);
+			int l = lo + counts[r];
+			int h = lo + counts[r + 1] - 1;
+			if (l < h) {
+				a = sort(a, l, h, d + 1);
+			}
 		}
 		return a;
 	}
 
 	public static void main(String[] args) {
-		String[] a = {"09", "01"};
+		String[] a = {"09", "00", "08", "11", "07", "22", "06", "33", "5", "44", "04", "55", "03", "66", "02", "77", "01", "88", "00", "99"};
 
 		System.out.println("sources: " + Arrays.toString(a));
 		sort(a);
