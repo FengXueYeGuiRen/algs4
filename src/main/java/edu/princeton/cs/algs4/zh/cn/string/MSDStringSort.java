@@ -10,10 +10,14 @@ import java.util.Arrays;
  */
 public class MSDStringSort {
 
+	/**
+	 * 基数
+	 */
 	private static int R;
-
+	/**
+	 * 数据分类的辅助数组
+	 */
 	private static String[] aux;
-	private static int[] counts;
 
 	public static String[] sort(String[] a, int r) {
 		if (a == null) {
@@ -37,22 +41,28 @@ public class MSDStringSort {
 	}
 
 	private static String[] sort(String[] a, int lo, int hi, int d) {
+		//  以第 d 个字符为键将 a[lo] 至 a[hi] 排序
 		if (lo >= hi) {
 			return a;
 		}
-		counts = new int[R + 2];
+		int[] counts = new int[R + 2];
+		//  计算频率
 		for (int i = lo; i <= hi; ++i) {
 			++counts[charAt(a[i], d) + 2];
 		}
+		//  将频率转换为索引
 		for (int r = 0; r < R + 1; ++r) {
 			counts[r + 1] += counts[r];
 		}
+		//  数据分类
 		for (int i = lo; i <= hi; ++i) {
 			aux[counts[charAt(a[i], d) + 1]++] = a[i];
 		}
+		//  回写
 		for (int i = lo; i <= hi; ++i) {
 			a[i] = aux[i - lo];
 		}
+		//  递归的以每个字符为键进行排序
 		for (int r = 0; r < R; ++r) {
 			int l = lo + counts[r];
 			int h = lo + counts[r + 1] - 1;
