@@ -32,19 +32,21 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 		if (key == null || "".equals(key.trim())) {
 			return;
 		}
-		put(root, key, val, 0);
+		root = put(root, key, val, 0);
 	}
 
 	private Node put(Node node, String key, Value val, int d) {
 		if (node == null) {
 			node = new Node();
 		}
+		//  如果 key 存在于以 x 为根结点的子单词查找树中则更新与它相关联的值
 		if (key.length() == d) {
 			node.val = val;
 			return node;
 		}
+		//  找到第 d 个字符所对应的子单词查找树
 		char ch = key.charAt(d);
-		node.nexts[ch] = put(node.nexts[ch], key, val, ++d);
+		node.nexts[ch] = put(node.nexts[ch], key, val, d + 1);
 		return node;
 	}
 
