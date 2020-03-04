@@ -32,7 +32,7 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 		if (key == null || "".equals(key.trim())) {
 			return;
 		}
-		root = put(root, key, val, 0);
+		root = put(root, key.trim(), val, 0);
 	}
 
 	private Node put(Node node, String key, Value val, int d) {
@@ -58,7 +58,24 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 	 */
 	@Override
 	public Value get(String key) {
-		return null;
+		if (key == null || "".equals(key.trim())) {
+			return null;
+		}
+		Node node = get(root, key.trim(), 0);
+		if (node == null) {
+			return null;
+		}
+		return (Value) node.val;
+	}
+
+	private Node get(Node node, String key, int d) {
+		//  返回以 x 作为根结点的子单词查找树
+		if (node == null || key.length() == d) {
+			return node;
+		}
+		//  找到第 d 个字符所对应的子单词查找树
+		char ch = key.charAt(d);
+		return get(node.nexts[ch], key, d + 1);
 	}
 
 	/**
