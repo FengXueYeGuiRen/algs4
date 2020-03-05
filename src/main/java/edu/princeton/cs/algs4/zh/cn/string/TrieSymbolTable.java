@@ -168,7 +168,21 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 	 */
 	@Override
 	public int size() {
-		return 0;
+		return size(root);
+	}
+
+	private int size(Node node) {
+		if (node == null) {
+			return 0;
+		}
+		int cnt = 0;
+		if (node.val != null) {
+			++cnt;
+		}
+		for (char ch = 0; ch < R; ++ch) {
+			cnt += size(node.nexts[ch]);
+		}
+		return cnt;
 	}
 
 	/**
