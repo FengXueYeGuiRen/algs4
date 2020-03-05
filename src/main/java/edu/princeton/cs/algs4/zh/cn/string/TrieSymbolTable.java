@@ -1,5 +1,7 @@
 package edu.princeton.cs.algs4.zh.cn.string;
 
+import edu.princeton.cs.algs4.Queue;
+
 /**
  * 基于单词查找树的符号表(5.2.1 算法 5.4)
  *
@@ -128,7 +130,24 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 	 */
 	@Override
 	public Iterable<String> keysWithPrefix(String s) {
-		return null;
+		Queue<String> q = new Queue();
+		if (s == null) {
+			return q;
+		}
+		collect(get(root, s, 0), s, q);
+		return q;
+	}
+
+	private void collect(Node node, String pre, Queue<String> q) {
+		if (node == null) {
+			return;
+		}
+		if (node.val != null) {
+			q.enqueue(pre);
+		}
+		for (char ch = 0; ch < R; ++ch) {
+			collect(node.nexts[ch], pre + ch, q);
+		}
 	}
 
 	/**
@@ -159,7 +178,7 @@ public class TrieSymbolTable<Value> implements StringSymbolTable<Value> {
 	 */
 	@Override
 	public Iterable<String> keys() {
-		return null;
+		return keysWithPrefix("");
 	}
 
 }
